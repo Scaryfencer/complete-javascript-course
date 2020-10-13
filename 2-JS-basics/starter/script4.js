@@ -10,12 +10,13 @@
 
 var john = {
 
+    fullName: "John Smith",
     bills: [124, 48, 268, 180, 42],
     limit1: 50,
     limit2: 200,
-    tipPercent1: 20,
-    tipPercent2: 15,
-    tipPercent3: 10,
+    tipPercent1: .20,
+    tipPercent2: .15,
+    tipPercent3: .10,
     tips: [],
     billsAndTips: [],
     tipsAvg: 0,
@@ -26,12 +27,13 @@ var john = {
 
 var mark = {
 
+    fullName: "Mark Garcia",
     bills: [77, 375, 110, 45],
     limit1: 100,
     limit2: 300,
-    tipPercent1: 20,
-    tipPercent2: 10,
-    tipPercent3: 25,
+    tipPercent1: .20,
+    tipPercent2: .10,
+    tipPercent3: .25,
     tips: [],
     billsAndTips: [],
     tipsAvg: 0,
@@ -43,20 +45,21 @@ var mark = {
 // add the total of tips and bills to the tipsandbills key value in the object
 // Use the rules in the object to figure tips
 
-function calcTips(billsObject) {
+function calcTips(tName) {
 
-    for (let i = 0; i < billsObject.bills.length; i++) {
+    for (let i = 0; i < tName.bills.length; i++) {
         
-        if (billsObject.bills[i] < billsObject.limit1) {
-            billsObject.tips.push(billsObject.bills[i] * billsObject.tipPercent1 / 100);
-            billsObject.billsAndTips.push(billsObject.bills[i] + (billsObject.bills[i] * billsObject.tipPercent1 / 100));
-        } else if (billsObject.bills[i] >= billsObject.limit1 && billsObject.bills[i] <= billsObject.limit2) {
-            billsObject.tips.push(billsObject.bills[i] * billsObject.tipPercent2 / 100);
-            billsObject.billsAndTips.push(billsObject.bills[i] + (billsObject.bills[i] * billsObject.tipPercent2 / 100));
+        var bill = tName.bills[i];
+        var tempPercent = 0;
+        if (bill < tName.limit1) {
+            tempPercent = tName.tipPercent1;
+        } else if (bill >= tName.limit1 && bill <= tName.limit2) {
+            tempPercent = tName.tipPercent2;;
         } else {
-            billsObject.tips.push(billsObject.bills[i] * billsObject.tipPercent3 / 100);
-            billsObject.billsAndTips.push(billsObject.bills[i] + (billsObject.bills[i] * billsObject.tipPercent3 / 100));
+            tempPercent = tName.tipPercent3;
         }
+        tName.tips[i] = bill * tempPercent;
+        tName.billsAndTips[i] = bill + (bill * tempPercent);
     }
 
 }
@@ -90,7 +93,7 @@ console.log(mark.tips,mark.billsAndTips, mark.tipsAvg)
 // log to console which family paid the highest tips ON AVERAGE
 
 if (john.tipsAvg > mark.tipsAvg) {
-    console.log("John is the better average tipper.")
+    console.log(john.fullName + " is the better average tipper.")
 } else {
-    console.log("Mark is the better average tipper.")
+    console.log(mark.fullName + " is the better average tipper.")
 }
