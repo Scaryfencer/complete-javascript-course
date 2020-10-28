@@ -23,17 +23,20 @@
             // Check if the answer is correct and print to the console whether the answer is correct or not 
             // Write another method for this
             if (answer == this.correctAnswer) {
-                console.log('You have answered correctly!');
+                x = 'correctly';
                 score += 1;
-                console.log('Total score = ' + score);
-                newRandomQuestion();
-            } else if (answer === null) {
+            } else if (answer === null || answer.toLowerCase() == 'exit') {
                 return
             } else {
-                console.log('That is incorrect!');
-                console.log('Total score = ' + score);
-                newRandomQuestion();
+                x = 'incorrectly';
             }  
+            this.displayScore(x);
+            newRandomQuestion();
+        }
+        this.displayScore = function (x) {
+            console.log('You have answered ' + x)
+            console.log(`Total score = ${score}`);
+            console.log('--------------------------');
         }
     }
 
@@ -48,13 +51,22 @@
     // Store and display the score
     var score = 0;
 
+    // Declare a last question placeholder
+    var randomNumber = 0;
+    var lastQuest = 3;
+
     // Select one random question and log it in the console, together with the possible answers (each question
     // should have a number) (Hint: write a method for the Question objects for this task)
+    // Extra credit, don't repeat questions.
     function newRandomQuestion() {
-        var randomQuestion = allThreeQuestions[(Math.floor(Math.random() * 3))];
-        randomQuestion.ask();
+        randomNumber = Math.floor(Math.random() * allThreeQuestions.length);
+        if (randomNumber !== lastQuest) {
+            var randomQuestion = allThreeQuestions[randomNumber];
+            lastQuest = randomNumber;
+            randomQuestion.ask();
+        } else newRandomQuestion();
     }
-    
+
     newRandomQuestion();
 
 })();
